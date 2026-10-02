@@ -77,6 +77,7 @@ QA_Portfolio/
 
 
 
+
 ##  Manual Testing Deliverables
 - Test Plan
 - Test Cases
