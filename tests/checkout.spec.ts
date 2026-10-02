@@ -1,23 +1,40 @@
 import { test, expect } from '@playwright/test';
+import { LoginPage } from '../src/pages/LoginPage';
+import { CartPage } from '../src/pages/CartPage';
+import { CheckoutPage } from '../src/pages/CheckoutPage';
 
-test('checkout test', async ({ page }) =>{
+test('Checkout test', async ({ page }) => {
 
-    await page.goto('https://www.saucedemo.com');
+    // Step 1: Create page objects
+    const loginPage = new LoginPage(page);
+    const cartPage = new CartPage(page);
+    const checkoutPage = new CheckoutPage(page);
+    
 
-    await page.fill('#user-name','standard_user');
-    await page.fill('#password', 'secret_sauce');
-    await page.click('#login-button');
+    // Step 2: Login
+    await loginPage.goto();
+    await loginPage.login('standard_user', 'secret_sauce');
 
-    await page.click('#add-to-cart-sauce-labs-backpack');
-    await page.click('.shopping_cart_link'); 
+    // Step 3: Add product to cart
+    await cartPage.addToCart();
 
-    await page.click('#checkout');
+    // Step 4: Go to cart
+    await checkoutPage.goToCart();
 
-    await page.fill('#first-name', 'mani');
-    await page.fill('#last-name', 'tester');
-    await page.fill('#postal-code', '676576');
-    await page.click('#continue');
-    await page.click('#finish');
-    await expect(page.locator('.complete-header')).toHaveText('Thank you for your order!');
+    // Step 5: Click checkout
+    await checkoutPage.clickCheckoutButton();
+
+    // Step 6: Fill customer details
+    await checkoutPage.fillDetails('Sevner', 'QA', '641001');
+
+    // Step 7: Click continue
+    await checkoutPage.clickContinueButton();
+
+    // Step 8: Click finish
+    await checkoutPage.clickFinish();
+
+    // Step 9: Check confirmation message
+    const message = await checkoutPage.getConfirmationMessage();
+    await expect(message).toHaveText('Thank you for your order!');
 
 });

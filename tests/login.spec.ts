@@ -1,10 +1,12 @@
-import {test,expect} from '@playwright/test';
-test('valid login page', async({page})=> {
-    await page.goto('https://www.saucedemo.com');
-    await page.fill('#user-name', 'standard_user');
-    await page.fill('#password', 'secret_sauce');
-    await page.click('#login-button');
-    await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
-}
+import { test, expect } from '@playwright/test';
+import { LoginPage } from '../src/pages/LoginPage';
 
-);
+test('valid login page', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+
+    await loginPage.goto();
+    await loginPage.login('wrong_user', 'wrong_password');
+
+    const errorMessage = await loginPage.getErrorMessage();
+    await expect(errorMessage).toBeVisible();
+});

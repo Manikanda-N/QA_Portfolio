@@ -1,23 +1,22 @@
 import {test, expect} from '@playwright/test';
+import { LoginPage } from '../src/pages/LoginPage';
+import { CartPage } from '../src/pages/CartPage';
+import { CheckoutPage } from '../src/pages/CheckoutPage';
+
+
 test('Add to cart test', async ({page})=>{
 
-    //step-1: goto SouceDemo
-    await page.goto('https://www.saucedemo.com'); 
+    const loginPage = new LoginPage(page);
+    const cartPage = new CartPage(page);
+    const checkoutPage = new CheckoutPage(page);
 
-    //Step-2: login
-    await page.fill('#user-name', 'standard_user');
-    await page.fill('#password','secret_sauce');
-    await page.click('#login-button');
+    // Step 2: Login first
+    await loginPage.goto();
+    await loginPage.login('standard_user', 'secret_sauce');
 
-//Step 3: Add top cart on first product
-await page.click('#add-to-cart-sauce-labs-backpack');
+     await cartPage.addToCart();
 
-//Step 4: check cart badge shows 1 item 
-await expect(page.locator('.shopping_cart_badge')).toHaveText('1');
-   
-
-
-}
-
-
-);
+      // Step 4: Check cart badge shows 1
+    const cartBadge = await cartPage.getCartBadge();
+    await expect(cartBadge).toHaveText('1');
+});
