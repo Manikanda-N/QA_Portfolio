@@ -27,6 +27,7 @@ This portfolio demonstrates my understanding of the Software Testing Life Cycle 
 ## 📂 Project Structure
 
 QA_Portfolio/
+
 │
 ├── manual-testing/
 │ ├── Test Plan.xlsx
@@ -34,24 +35,29 @@ QA_Portfolio/
 │ ├── RTM.xlsx
 │ ├── Bug Report.xlsx
 │ └── Test Summary Report.docx
+
 │
 ├── src/
 │ └── pages/
 │ ├── LoginPage.ts
 │ ├── CartPage.ts
 │ └── CheckoutPage.ts
+
 │
 ├── tests/
 │ ├── cart.spec.ts
 │ └── checkout.spec.ts
+
 │
 ├── postman/
 │ └── collections/
+
 │
 ├── package.json
 ├── package-lock.json
 ├── playwright.config.ts
 └── README.md
+
 
 
 ##  Manual Testing Deliverables
